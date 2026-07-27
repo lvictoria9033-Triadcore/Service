@@ -1,0 +1,1 @@
+This folder contains BAT files used to install and untinstall the custom Windows service.

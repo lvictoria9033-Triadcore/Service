@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <TimerInterval TimeUnits="Seconds">
+    12
+  </TimerInterval>
+  <LoggingDestination Options="LocalEventLog;XMLFile;TextFile">
+    LocalEventLog
+  </LoggingDestination>
+</Configuration>

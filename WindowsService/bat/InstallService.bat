@@ -1,0 +1,1 @@
+C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\InstallUtil.exe  C:\SourceSafe\WindowsService\WindowsService\bin\Debug\StvWindowsService.exe

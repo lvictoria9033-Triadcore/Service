@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceConfiguration", "ServiceConfiguration\ServiceConfiguration.csproj", "{71C497BB-2B8C-466C-BD07-E8AA6A2ED8D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlConfiguration", "..\..\ClassLibrary\XmlConfiguration\xmlConfiguration\XmlConfiguration.csproj", "{72E2002F-C2CD-4F32-B67A-AF24F5F031EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "..\..\ClassLibrary\Logging\Logging\Logging.csproj", "{ADE3DAA1-FC56-4C3F-AA65-4B70B3C6BC6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71C497BB-2B8C-466C-BD07-E8AA6A2ED8D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C497BB-2B8C-466C-BD07-E8AA6A2ED8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C497BB-2B8C-466C-BD07-E8AA6A2ED8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C497BB-2B8C-466C-BD07-E8AA6A2ED8D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E2002F-C2CD-4F32-B67A-AF24F5F031EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E2002F-C2CD-4F32-B67A-AF24F5F031EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E2002F-C2CD-4F32-B67A-AF24F5F031EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E2002F-C2CD-4F32-B67A-AF24F5F031EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADE3DAA1-FC56-4C3F-AA65-4B70B3C6BC6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE3DAA1-FC56-4C3F-AA65-4B70B3C6BC6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE3DAA1-FC56-4C3F-AA65-4B70B3C6BC6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE3DAA1-FC56-4C3F-AA65-4B70B3C6BC6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
