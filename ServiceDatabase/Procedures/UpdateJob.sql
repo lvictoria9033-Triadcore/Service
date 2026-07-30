@@ -5,7 +5,7 @@ GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Inserts a new Job if it does not exist, otherwise the Job is updated.
-Create Date: 2023.08.28
+Create Date: 2026.07.28
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[UpdateJob]
@@ -29,6 +29,9 @@ SET NOCOUNT ON
 
 DECLARE @LastUpdatedId INT
 DECLARE @ErrorCode INT = -1
+
+
+
 
 IF (@SortText IS NULL) BEGIN
 	SET @SortText=''
@@ -93,9 +96,7 @@ END
 BEGIN TRANSACTION [TransUpdateData]
 
 	IF EXISTS(SELECT [JobId] FROM [Service].[Jobs] WHERE [JobId]=@JobId) BEGIN
-		-- Update the record
-		
-		UPDATE [Service].[Jobs]
+		-- Update the record		UPDATE [Service].[Jobs]
 			SET  [UpdateDate] = GETDATE()
 				,[UpdateUserId] = @UpdateUserId
 				,[SortText] = @SortText
@@ -114,7 +115,6 @@ BEGIN TRANSACTION [TransUpdateData]
 			GOTO HANDLE_ERROR
 		END
 		SET @LastUpdatedId = @JobId
-
 	END
 	ELSE BEGIN
 		-- Insert a new record
@@ -122,6 +122,7 @@ BEGIN TRANSACTION [TransUpdateData]
 			INTO [Service].[Jobs] 
 					([UpdateUserId]
 					,[CreateUserId]
+					,[RecordComment]
 					,[SortText]
 					,[JobName]
 					,[JobFriendlyName]
@@ -133,6 +134,7 @@ BEGIN TRANSACTION [TransUpdateData]
 					,[LogFinishes])
 			VALUES ( @UpdateUserId
 					,@UpdateUserId
+					,'Created via [Service].[UpdateJob].'
 					,@SortText
 					,@JobName
 					,@JobFriendlyName
@@ -148,7 +150,6 @@ BEGIN TRANSACTION [TransUpdateData]
 			GOTO HANDLE_ERROR
 		END
 		SET @LastUpdatedId = @@IDENTITY
-
 	END
 
 COMMIT TRANSACTION [TransUpdateData]

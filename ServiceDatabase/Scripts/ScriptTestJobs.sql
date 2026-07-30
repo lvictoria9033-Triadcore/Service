@@ -1,13 +1,15 @@
 ---------------------------------------------------------------------------------------------------------- 
 -- Job database components testing 
--- Create Date: 2023.08.28
+-- Create Date: 2026.07.28
 -- Created By : Triadcore (ACB)
+-- Special Note: [GetJobs] was created by ACB but manually modified to include [FullPath]. Do not
+--				 overwrite with subsequent re-run of ACB.
 ----------------------------------------------------------------------------------------------------------
- 
+
 
 ------------------------------------------------------------------------------------------------------------
 /*
-SELECT * FROM [Service].[Jobs] 
+SELECT * FROM [Service].[Jobs] WITH (NOLOCK) ORDER BY 8
 */
 
 ------------------------------------------------------------------------------------------------------------
@@ -19,30 +21,30 @@ WHERE [SortText]='' OR [SortText] IS NULL
 
 ------------------------------------------------------------------------------------------------------------
 EXEC [Service].[GetJobs] 
-	 NULL --@GroupingLogic VARCHAR(3) -- only 'AND' or 'OR'
-	,NULL --@JobId INT
-	,NULL --@CreateUserId INT
-	,NULL --@UpdateUserId INT
-	,NULL --@Active BIT
-	,NULL --@JobNameCompareLogic VARCHAR(10)
-	,NULL --@JobName VARCHAR(50)
-	,NULL --@LogFinishesCompareLogic VARCHAR(10)
-	,NULL --@LogFinishes BIT
+		 NULL --@GroupingLogic VARCHAR(3) -- only 'AND' or 'OR'
+		,NULL --@JobId INT
+		,NULL --@UpdateUserId INT
+		,NULL --@CreateUserId INT
+		,NULL --@Active BIT
+		,NULL --@JobNameCompareLogic VARCHAR(10)
+		,NULL --@JobName VARCHAR(50)
+		,NULL --@LogFinishesCompareLogic VARCHAR(10)
+		,NULL --@LogFinishes BIT
 
 ------------------------------------------------------------------------------------------------------------
 /*
 EXEC [Service].[UpdateJob]
-	NULL --@JobId INT
-	,'' --@SortText VARCHAR(100)
-	,'' --@JobName VARCHAR(50)
-	,'' --@JobFriendlyName VARCHAR(100)
-	,'' --@Description VARCHAR(200)
-	,'' --@ExecPath VARCHAR(2000)
-	,'' --@ExecFile VARCHAR(200)
-	,'' --@ParamString VARCHAR(1000)
-	,0 --@LogStarts BIT
-	,0 --@LogFinishes BIT
-	,NULL --@UpdateUserId INT
+		NULL --@JobId INT
+		,'' --@SortText VARCHAR(100)
+		,'' --@JobName VARCHAR(50)
+		,'' --@JobFriendlyName VARCHAR(100)
+		,'' --@Description VARCHAR(200)
+		,'' --@ExecPath VARCHAR(2000)
+		,'' --@ExecFile VARCHAR(200)
+		,'' --@ParamString VARCHAR(1000)
+		,0 --@LogStarts BIT
+		,0 --@LogFinishes BIT
+		,NULL --@UpdateUserId INT
 */
 
 ------------------------------------------------------------------------------------------------------------

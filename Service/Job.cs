@@ -1,8 +1,9 @@
 /******************************************************************************************************************************************************
 * Name        : Job.cs
 * Purpose     : Provides Job support.
-* Create Date : 2023.08.28
+* Create Date : 2026.07.28
 * Created By  : Triadcore (ACB)
+* Special Note: Created by ACB but manually modified to include [FullPath]. Do not overwrite with subsequent re-run of ACB.
 ******************************************************************************************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,13 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using Triadcore;
-using Triadcore.Base;
 
 
 namespace Triadcore.Service
 {
 
-
-    public class JobsQuickList : Triadcore.Base.QuickListBase
+	
+	public class JobsQuickList : Triadcore.Base.QuickListBase
     {
 
 
@@ -37,33 +37,33 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// Gets or sets the compare logic to filter the The unique name for the job..
-        /// </summary>
-        public Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic JobNameCompareLogic
-        {
-            get
-            {
-                return this.jobNameCompareLogic;
-            }
-            set
-            {
-                this.jobNameCompareLogic = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the JobName value for filtering.
-        /// </summary>
-        public string JobName
-        {
-            get
-            {
-                return this.jobName;
-            }
-            set
-            {
-                this.jobName = value;
-            }
-        }
+		/// Gets or sets the compare logic to filter the The unique name for the job..
+		/// </summary>
+		public Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic JobNameCompareLogic
+		{
+			get
+			{
+				return this.jobNameCompareLogic;
+			}
+			set
+			{
+				this.jobNameCompareLogic = value;
+			}
+		}
+		/// <summary>
+		/// Gets or sets the JobName value for filtering.
+		/// </summary>
+		public string JobName
+		{
+			get
+			{
+				return this.jobName;
+			}
+			set
+			{
+				this.jobName =  value;
+			}
+		}
         /// <summary>
         /// Gets a list of data items converted from Triadcore.Base.QuickListItemBase{}.
         /// Provided for convenient data binding. Converted at runtime.
@@ -86,9 +86,9 @@ namespace Triadcore.Service
         #region LocalItems
         private Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic groupingLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic.NULL;
         private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic jobNameCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private string jobName = null;
-        private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic logFinishesCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private bool? logFinishes = null;
+		private string jobName = null;
+		private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic logFinishesCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
+		private bool? logFinishes = null;
         #endregion
 
 
@@ -134,52 +134,51 @@ namespace Triadcore.Service
                 {
                     base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", this.groupingLogic.ToString());
                 }
-
-                base.sqlCommand.Parameters.AddWithValue("@JobId", System.DBNull.Value);
-                if (base.createUserId != null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@CreateUserId", base.createUserId);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                }
-                if (base.updateUserId != null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                }
-                if (base.active != Triadcore.ClassLibrary.Utilities.TriStateBoolean.Undefined)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@Active", base.active);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                }
-                if (this.jobNameCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.jobNameCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@JobName", System.DBNull.Value);
-                }
-                if (this.logFinishesCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.logFinishesCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@LogFinishes", this.logFinishes);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
-                }
+			    base.sqlCommand.Parameters.AddWithValue("@JobId", System.DBNull.Value);
+			    if (base.updateUserId != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
+				}
+				if (base.createUserId != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateUserId", base.createUserId);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
+				}
+				if (base.active != Triadcore.ClassLibrary.Utilities.TriStateBoolean.Undefined)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@Active", base.active);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
+				}
+				if (this.jobNameCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.jobNameCompareLogic));
+					base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", System.DBNull.Value);
+					base.sqlCommand.Parameters.AddWithValue("@JobName", System.DBNull.Value);
+				}
+				if (this.logFinishesCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.logFinishesCompareLogic));
+					base.sqlCommand.Parameters.AddWithValue("@LogFinishes", this.logFinishes);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);
+					base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
+				}
                 #endregion
 
             }
@@ -200,14 +199,16 @@ namespace Triadcore.Service
                 {
                     uid = sqlDr.GetInt32(0);
                     Triadcore.Service.JobsQuickListItem item = new Triadcore.Service.JobsQuickListItem(uid);
-                    item.CreateDate = sqlDr.GetDateTime(1);
-                    item.CreateUserId = sqlDr.GetInt32(2);
-                    item.CreateUserName = sqlDr.GetString(3);
-                    item.UpdateDate = sqlDr.GetDateTime(4);
-                    item.UpdateUserId = sqlDr.GetInt32(5);
-                    item.UpdateUserName = sqlDr.GetString(6);
-                    item.Active = sqlDr.GetBoolean(8);
-                    item.JobName = sqlDr.GetString(10);
+                    item.UpdateDate = sqlDr.GetDateTime(2);
+					item.UpdateUserId = sqlDr.GetInt32(3); // Fkey
+					item.UpdateUserName = sqlDr.GetString(4); // FKey alias to UpdateUserId
+					item.CreateDate = sqlDr.GetDateTime(5);
+					item.CreateUserId = sqlDr.GetInt32(6); // Fkey
+					item.CreateUserName = sqlDr.GetString(7); // FKey alias to CreateUserId
+					item.Active = sqlDr.GetBoolean(8);
+					item.JobName = sqlDr.GetString(10);
+					item.Description = sqlDr.GetString(12);
+					item.ExecFile = sqlDr.GetString(14);
                     base.itemsQuickList.Add(item);
                     base.uidList.Add(uid);
                     lastUid = uid;
@@ -247,9 +248,9 @@ namespace Triadcore.Service
 
             this.groupingLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic.NULL;
             this.jobNameCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.jobName = null;
-            this.logFinishesCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.logFinishes = false;
+			this.jobName = null;
+			this.logFinishesCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
+			this.logFinishes = false;
 
             return;
 
@@ -270,9 +271,12 @@ namespace Triadcore.Service
     }
 
 
-    public class JobsQuickListItem : Triadcore.Base.QuickListItemBase
+	public class JobsQuickListItem : Triadcore.Base.QuickListItemBase
     {
 
+        /// <summary>
+	    /// The Job unique identifier.
+	    /// </summary>    
         public int JobId
         {
             get
@@ -281,13 +285,29 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// The unique name for the job.
-        /// </summary>
-        public string JobName
-        {
-            get;
-            set;
-        }
+		/// The unique name for the job.
+		/// </summary>
+		public string JobName
+		{
+			get;
+			set;
+		}
+		/// <summary>
+		/// Free-text description of the job.
+		/// </summary>
+		public string Description
+		{
+			get;
+			set;
+		}
+		/// <summary>
+		/// The file name of the executable code/file.
+		/// </summary>
+		public string ExecFile
+		{
+			get;
+			set;
+		}
 
         public JobsQuickListItem(int itemUid) : base(itemUid)
         {
@@ -296,6 +316,8 @@ namespace Triadcore.Service
     }
 
 
+
+    // Special Note: Created by ACB but manually modified to include[FullPath]. Do not overwrite with subsequent re-run of ACB.
     public class Job : Triadcore.Base.ItemBase
     {
 
@@ -312,247 +334,241 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// The field used for sorting.
+		/// The field used for sorting.
+		/// </summary>
+		public string SortText
+		{
+			get
+			{
+				return this.sortText;
+			}
+			set
+			{
+				if (this.sortText != value)
+				{
+					this.sortText =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// The unique name for the job.
+		/// </summary>
+		public string JobName
+		{
+			get
+			{
+				return this.jobName;
+			}
+			set
+			{
+				if (this.jobName != value)
+				{
+					this.jobName =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// Free-text job display name.
+		/// </summary>
+		public string JobFriendlyName
+		{
+			get
+			{
+				return this.jobFriendlyName;
+			}
+			set
+			{
+				if (this.jobFriendlyName != value)
+				{
+					this.jobFriendlyName =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// Free-text description of the job.
+		/// </summary>
+		public string Description
+		{
+			get
+			{
+				return this.description;
+			}
+			set
+			{
+				if (this.description != value)
+				{
+					this.description =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// The directory path to the job executable code.
+		/// </summary>
+		public string ExecPath
+		{
+			get
+			{
+				return this.execPath;
+			}
+			set
+			{
+				if (this.execPath != value)
+				{
+					this.execPath =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// The file name of the executable code/file.
+		/// </summary>
+		public string ExecFile
+		{
+			get
+			{
+				return this.execFile;
+			}
+			set
+			{
+				if (this.execFile != value)
+				{
+					this.execFile =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+        /// <summary>
+        /// Gets the full exectable path of combined ExecPath and ExecFile retrieved from the data store.
         /// </summary>
-        public string SortText
+        public string FullExecPath
         {
             get
             {
-                return this.sortText;
-            }
-            set
-            {
-                if (this.sortText != value)
-                {
-                    this.sortText = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
+                return this.fullExecPath;
             }
         }
         /// <summary>
-        /// The unique name for the job.
-        /// </summary>
-        public string JobName
-        {
-            get
-            {
-                return this.jobName;
-            }
-            set
-            {
-                if (this.jobName != value)
-                {
-                    this.jobName = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Free-text job display name.
-        /// </summary>
-        public string JobFriendlyName
-        {
-            get
-            {
-                return this.jobFriendlyName;
-            }
-            set
-            {
-                if (this.jobFriendlyName != value)
-                {
-                    this.jobFriendlyName = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Free-text description of the job.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                if (this.description != value)
-                {
-                    this.description = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Gets the base path used for job executables.
-        /// </summary>
-        public string BasePath
-        {
-            get
-            {
-                return this.basePath;
-            }
-        }
-        /// <summary>
-        /// The directory path to the job executable code.
-        /// </summary>
-        public string ExecPath
-        {
-            get
-            {
-                return this.execPath;
-            }
-            set
-            {
-                if (this.execPath != value)
-                {
-                    this.execPath = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// The file name of the executable code/file.
-        /// </summary>
-        public string ExecFile
-        {
-            get
-            {
-                return this.execFile;
-            }
-            set
-            {
-                if (this.execFile != value)
-                {
-                    this.execFile = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Gets the full path, including file name, of the executable.
+        /// DEPRECATED. For legacy use only.
+        /// Gets the full exectable path of combined ExecPath and ExecFile retrieved from the data store.
         /// </summary>
         public string FullPath
         {
             get
             {
-                if (this.execPath.IndexOf("{BasePath}") >= 0)
-                {
-                    return this.execPath.TrimStart('\\').Replace("{BasePath}", this.basePath.TrimEnd('\\')).TrimEnd('\\') + "\\" + this.execFile;
-                }
-                else
-                {
-                    return this.execPath.TrimEnd('\\') + "\\" + this.execFile;
-                }
-
+                return this.FullExecPath;
             }
         }
         /// <summary>
         /// The parameter string to pass to the executable.
         /// </summary>
         public string ParamString
-        {
-            get
-            {
-                return this.paramString;
-            }
-            set
-            {
-                if (this.paramString != value)
-                {
-                    this.paramString = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Indicates if a log entry is to be made when the job starts.
-        /// </summary>
-        public bool LogStarts
-        {
-            get
-            {
-                return this.logStarts;
-            }
-            set
-            {
-                if (this.logStarts != value)
-                {
-                    this.logStarts = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// ndicates if a log entry is to be made when the job finishes.
-        /// </summary>
-        public bool LogFinishes
-        {
-            get
-            {
-                return this.logFinishes;
-            }
-            set
-            {
-                if (this.logFinishes != value)
-                {
-                    this.logFinishes = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
+		{
+			get
+			{
+				return this.paramString;
+			}
+			set
+			{
+				if (this.paramString != value)
+				{
+					this.paramString =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// Indicates if a log entry is to be made when the job starts.
+		/// </summary>
+		public bool LogStarts
+		{
+			get
+			{
+				return this.logStarts;
+			}
+			set
+			{
+				if (this.logStarts != value)
+				{
+					this.logStarts =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// ndicates if a log entry is to be made when the job finishes.
+		/// </summary>
+		public bool LogFinishes
+		{
+			get
+			{
+				return this.logFinishes;
+			}
+			set
+			{
+				if (this.logFinishes != value)
+				{
+					this.logFinishes =  value;
+					if (!this.isNew)
+					{
+							this.isDirty = true;
+					}
+				}
+			}
+		}
         #endregion
 
 
         #region Local Items
         private string sortText = "";
-        private string jobName = "";
-        private string jobFriendlyName = "";
-        private string description = "";
-        private string execPath = "";
-        private string execFile = "";
-        private string paramString = "";
-        private bool logStarts = false;
-        private bool logFinishes = false;
+		private string jobName = "";
+		private string jobFriendlyName = "";
+		private string description = "";
+		private string execPath = "";
+		private string execFile = "";
+		private string paramString = "";
+		private bool logStarts = false;
+		private bool logFinishes = false;
+		//
+		private string sortTextOld = "";
+		private string jobNameOld = "";
+		private string jobFriendlyNameOld = "";
+		private string descriptionOld = "";
+		private string execPathOld = "";
+		private string execFileOld = "";
+		private string paramStringOld = "";
+		private bool logStartsOld = false;
+		private bool logFinishesOld = false;
         //
-        private string sortTextOld = "";
-        private string jobNameOld = "";
-        private string jobFriendlyNameOld = "";
-        private string descriptionOld = "";
-        private string execPathOld = "";
-        private string execFileOld = "";
-        private string paramStringOld = "";
-        private bool logStartsOld = false;
-        private bool logFinishesOld = false;
-        //
-        private string basePath = "";
+        private string fullExecPath = "";
+        private string fullExecPathOld = "";
         #endregion
 
 
@@ -595,14 +611,12 @@ namespace Triadcore.Service
                 #region Set stored procedure parameters
                 base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);
                 base.sqlCommand.Parameters.AddWithValue("@JobId", base.itemUid);
-                base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobName", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
-                #endregion
+				base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", System.DBNull.Value);base.sqlCommand.Parameters.AddWithValue("@JobName", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
+			    #endregion
 
                 // Execute the stored procedure
                 sqlDr = base.sqlCommand.ExecuteReader();
@@ -612,24 +626,24 @@ namespace Triadcore.Service
                 {
                     sqlDr.Read();
                     base.itemUid = sqlDr.GetInt32(0);
-                    base.createDate = sqlDr.GetDateTime(1);
-                    base.createUserId = sqlDr.GetInt32(2);
-                    base.createUserName = sqlDr.GetString(3);
-                    base.updateDate = sqlDr.GetDateTime(4);
-                    base.updateUserId = sqlDr.GetInt32(5);
-                    base.updateUserName = sqlDr.GetString(6);
-                    base.recordComment = sqlDr.GetString(7);
-                    base.active = sqlDr.GetBoolean(8);
-                    this.sortText = sqlDr.GetString(9);
-                    this.jobName = sqlDr.GetString(10);
-                    this.jobFriendlyName = sqlDr.GetString(11);
-                    this.description = sqlDr.GetString(12);
-                    this.basePath = sqlDr.GetString(13);
-                    this.execPath = sqlDr.GetString(14);
-                    this.execFile = sqlDr.GetString(15);
-                    this.paramString = sqlDr.GetString(16);
-                    this.logStarts = sqlDr.GetBoolean(17);
-                    this.logFinishes = sqlDr.GetBoolean(18);
+                    base.recordComment = sqlDr.GetString(1);
+					base.updateDate = sqlDr.GetDateTime(2);
+					base.updateUserId = sqlDr.GetInt32(3);
+					base.updateUserName = sqlDr.GetString(4);
+					base.createDate = sqlDr.GetDateTime(5);
+					base.createUserId = sqlDr.GetInt32(6);
+					base.createUserName = sqlDr.GetString(7);
+					base.active = sqlDr.GetBoolean(8);
+					this.sortText = sqlDr.GetString(9);
+					this.jobName = sqlDr.GetString(10);
+					this.jobFriendlyName = sqlDr.GetString(11);
+					this.description = sqlDr.GetString(12);
+					this.execPath = sqlDr.GetString(13);
+					this.execFile = sqlDr.GetString(14);
+                    this.fullExecPath = sqlDr.GetString(15);
+					this.paramString = sqlDr.GetString(16);
+					this.logStarts = sqlDr.GetBoolean(17);
+					this.logFinishes = sqlDr.GetBoolean(18);
                     base.isValid = true;
                 }
                 else
@@ -665,7 +679,7 @@ namespace Triadcore.Service
             finally
             {
 
-                if (sqlDr != null && !sqlDr.IsClosed)
+                if (sqlDr != null && !sqlDr.IsClosed )
                 {
                     sqlDr.Close();
                 }
@@ -694,47 +708,47 @@ namespace Triadcore.Service
 
             bool isValid = true;
 
-            if (this.sortText == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The SortText cannot be null.");
-            }
-            if (this.jobName == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The JobName cannot be null.");
-            }
-            if (this.jobFriendlyName == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The JobFriendlyName cannot be null.");
-            }
-            if (this.description == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The Description cannot be null.");
-            }
-            if (this.execPath == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The ExecPath cannot be null.");
-            }
-            if (this.execFile == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The ExecFile cannot be null.");
-            }
-            if (this.paramString == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The ParamString cannot be null.");
-            }
-            if (isValid && this.IsDuplicate())
-            {
-                isValid = false;
-                base.errorMessages.Add("The item [JobName] already exists in the datastore.");
-            }
-
+            if (this.sortText == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The SortText cannot be null.");
+			}
+			if (this.jobName == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The JobName cannot be null.");
+			}
+			if (this.jobFriendlyName == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The JobFriendlyName cannot be null.");
+			}
+			if (this.description == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The Description cannot be null.");
+			}
+			if (this.execPath == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The ExecPath cannot be null.");
+			}
+			if (this.execFile == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The ExecFile cannot be null.");
+			}
+			if (this.paramString == null )
+			{
+				isValid = false;
+				base.errorMessages.Add("The ParamString cannot be null.");
+			}
+			if (isValid && this.IsDuplicate())
+			{
+				isValid = false;
+				base.errorMessages.Add("The item [JobName] already exists in the datastore.");
+			}
+        
             return isValid;
 
         }
@@ -750,19 +764,20 @@ namespace Triadcore.Service
             if (!this.ValidateItem())
             {
                 StringBuilder msg = new StringBuilder();
+                int cnt = 0;
                 msg.Append("Validation Error: ");
                 if (this.errorMessages.Count > 0)
                 {
                     foreach (string s in this.errorMessages)
                     {
-                        msg.Append(" " + s);
+                        msg.Append(" [" + cnt.ToString() + "] " + s);
                     }
                 }
                 else
                 {
                     msg.Append(" Data item failed to validate.");
                 }
-                throw new Exception(msg.ToString());
+                throw new Exception(msg.ToString().Trim());
             }
 
             try
@@ -775,7 +790,7 @@ namespace Triadcore.Service
                 base.sqlCommand.Connection = base.database.SQLConnection;
                 base.sqlCommand.CommandType = CommandType.StoredProcedure;
                 base.sqlCommand.CommandText = "[Service].[UpdateJob]";
-
+			
                 #region Set stored procedure parameters
                 if (!base.isNew)
                 {
@@ -787,15 +802,15 @@ namespace Triadcore.Service
                 }
                 base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId);
                 base.sqlCommand.Parameters.AddWithValue("@SortText", this.sortText);
-                base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
-                base.sqlCommand.Parameters.AddWithValue("@JobFriendlyName", this.jobFriendlyName);
-                base.sqlCommand.Parameters.AddWithValue("@Description", this.description);
-                base.sqlCommand.Parameters.AddWithValue("@ExecPath", this.execPath);
-                base.sqlCommand.Parameters.AddWithValue("@ExecFile", this.execFile);
-                base.sqlCommand.Parameters.AddWithValue("@ParamString", this.paramString);
-                base.sqlCommand.Parameters.AddWithValue("@LogStarts", this.logStarts);
-                base.sqlCommand.Parameters.AddWithValue("@LogFinishes", this.logFinishes);
-                #endregion
+				base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
+				base.sqlCommand.Parameters.AddWithValue("@JobFriendlyName", this.jobFriendlyName);
+				base.sqlCommand.Parameters.AddWithValue("@Description", this.description);
+				base.sqlCommand.Parameters.AddWithValue("@ExecPath", this.execPath);
+				base.sqlCommand.Parameters.AddWithValue("@ExecFile", this.execFile);
+				base.sqlCommand.Parameters.AddWithValue("@ParamString", this.paramString);
+				base.sqlCommand.Parameters.AddWithValue("@LogStarts", this.logStarts);
+				base.sqlCommand.Parameters.AddWithValue("@LogFinishes", this.logFinishes);
+			    #endregion
 
                 // Execute stored procedure.
                 int lastUpdatedId = Convert.ToInt32(base.sqlCommand.ExecuteScalar()); // Returns Id of last updated/inserted data item
@@ -850,7 +865,7 @@ namespace Triadcore.Service
         }
 
         /// <summary>
-        /// Sets the Active indicator in the datastore.
+        /// Deleltes the item from the datastore.  If the item has a reference constraint and cannot be delete, it's set to Inactive.
         /// </summary>
         public override void DeleteItem()
         {
@@ -879,7 +894,7 @@ namespace Triadcore.Service
                 base.sqlCommand.Parameters.Clear();
                 base.sqlCommand.Parameters.AddWithValue("@JobId", base.itemUid);
                 base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updatingUser.UserId);
-                #endregion
+			    #endregion
 
                 // Execute stored procedure.
                 returnCode = Convert.ToInt32(base.sqlCommand.ExecuteScalar()); // Returns an error code. 0=no error.
@@ -1024,6 +1039,7 @@ namespace Triadcore.Service
 
         }
 
+        
         /// <summary>
         /// Restores the data that has not been saved to the datastore to their original values.
         /// </summary>
@@ -1034,14 +1050,15 @@ namespace Triadcore.Service
             {
                 base.UndoChanges();
                 this.sortText = this.sortTextOld;
-                this.jobName = this.jobNameOld;
-                this.jobFriendlyName = this.jobFriendlyNameOld;
-                this.description = this.descriptionOld;
-                this.execPath = this.execPathOld;
-                this.execFile = this.execFileOld;
-                this.paramString = this.paramStringOld;
-                this.logStarts = this.logStartsOld;
-                this.logFinishes = this.logFinishesOld;
+				this.jobName = this.jobNameOld;
+				this.jobFriendlyName = this.jobFriendlyNameOld;
+				this.description = this.descriptionOld;
+				this.execPath = this.execPathOld;
+				this.execFile = this.execFileOld;
+				this.paramString = this.paramStringOld;
+				this.logStarts = this.logStartsOld;
+				this.logFinishes = this.logFinishesOld;
+                this.fullExecPath = this.fullExecPathOld;
             }
 
             return;
@@ -1057,14 +1074,15 @@ namespace Triadcore.Service
             base.BackupValues();
 
             this.sortTextOld = this.sortText;
-            this.jobNameOld = this.jobName;
-            this.jobFriendlyNameOld = this.jobFriendlyName;
-            this.descriptionOld = this.description;
-            this.execPathOld = this.execPath;
-            this.execFileOld = this.execFile;
-            this.paramStringOld = this.paramString;
-            this.logStartsOld = this.logStarts;
-            this.logFinishesOld = this.logFinishes;
+			this.jobNameOld = this.jobName;
+			this.jobFriendlyNameOld = this.jobFriendlyName;
+			this.descriptionOld = this.description;
+			this.execPathOld = this.execPath;
+			this.execFileOld = this.execFile;
+			this.paramStringOld = this.paramString;
+			this.logStartsOld = this.logStarts;
+			this.logFinishesOld = this.logFinishes;
+            this.fullExecPathOld = this.fullExecPath;
 
             return;
 
@@ -1079,15 +1097,15 @@ namespace Triadcore.Service
             base.DeinitializeValues();
 
             this.sortText = "";
-            this.jobName = "";
-            this.jobFriendlyName = "";
-            this.description = "";
-            this.basePath = "";
-            this.execPath = "";
-            this.execFile = "";
-            this.paramString = "";
-            this.logStarts = false;
-            this.logFinishes = false;
+			this.jobName = "";
+			this.jobFriendlyName = "";
+			this.description = "";
+			this.execPath = "";
+			this.execFile = "";
+			this.paramString = "";
+			this.logStarts = false;
+			this.logFinishes = false;
+            this.fullExecPath = "";
 
             this.BackupValues();
 
@@ -1119,14 +1137,12 @@ namespace Triadcore.Service
 
                 // Set stored procedure parameters.
                 base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.EqualTo));
-                base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
-                base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
+			    base.sqlCommand.Parameters.AddWithValue("@JobId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@JobNameCompareLogic",Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.EqualTo));base.sqlCommand.Parameters.AddWithValue("@JobName", this.jobName);
+				base.sqlCommand.Parameters.AddWithValue("@LogFinishesCompareLogic", System.DBNull.Value);base.sqlCommand.Parameters.AddWithValue("@LogFinishes", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
 
                 // Execute the stored procedure
                 sqlDr = base.sqlCommand.ExecuteReader();
