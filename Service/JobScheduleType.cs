@@ -542,8 +542,8 @@ namespace Triadcore.Service
                     base.updateUserId = sqlDr.GetInt32(5);
                     base.updateUserName = sqlDr.GetString(6);
                     base.recordComment = sqlDr.GetString(7);
-                    base.active = sqlDr.GetBoolean(8);
-                    this.jobScheduleTypeName = sqlDr.GetString(9);
+					base.active = Triadcore.ClassLibrary.Utilities.String2TriStateBoolean(sqlDr.GetBoolean(8));
+					this.jobScheduleTypeName = sqlDr.GetString(9);
                     this.description = sqlDr.GetString(10);
                     this.instanceDescription = sqlDr.GetString(11);
                     this.note = sqlDr.GetString(12);

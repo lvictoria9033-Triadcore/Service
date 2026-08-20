@@ -42,9 +42,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Triadcore.Base">
-      <HintPath>..\..\Assemblies\Triadcore.Base.dll</HintPath>
-    </Reference>
     <Reference Include="Triadcore.ClassLibrary.DataConn">
       <HintPath>..\..\Assemblies\Triadcore.ClassLibrary.DataConn.dll</HintPath>
     </Reference>
@@ -63,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Base\Base\Base.csproj">
+      <Project>{8c3ec555-7665-45a4-b776-083eeea16a2f}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
