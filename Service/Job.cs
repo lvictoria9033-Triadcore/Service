@@ -633,7 +633,7 @@ namespace Triadcore.Service
 					base.createDate = sqlDr.GetDateTime(5);
 					base.createUserId = sqlDr.GetInt32(6);
 					base.createUserName = sqlDr.GetString(7);
-					base.active = Triadcore.ClassLibrary.Utilities.String2TriStateBoolean(sqlDr.GetBoolean(8));
+					base.active = sqlDr.GetBoolean(8);
 					this.sortText = sqlDr.GetString(9);
 					this.jobName = sqlDr.GetString(10);
 					this.jobFriendlyName = sqlDr.GetString(11);
