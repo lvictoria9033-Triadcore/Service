@@ -1,27 +1,28 @@
-IF (Base.ProcedureExists('Service','GetJobs')=1)
+IF (Base.ProcedureExists('Service','GetJobs') = 1)
 	DROP PROCEDURE [Service].[GetJobs]
 
 GO
 
-/*----------------------------------------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------------------------------
 Returns results based on the criteria specified in the parameters.
-The calling program is required to embed the proper single quotes into the paramenters.
+The calling program is required to embed the proper single quotes into the parameters.
 Note: Specifying @GroupingLogic='OR' requires that at least one of the input arguments is not 'null'.
-Create Date: 2026.07.28
+Create Date: 2026.10.22
 Created By : Triadcore (ACB)
-Special Note: Created by ACB but manually modified to include [FullPath]. Do not overwrite with subsequent re-run of ACB.
-----------------------------------------------------------------------------------------------------------------------------*/
+---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[GetJobs]
 (
 	@GroupingLogic VARCHAR(3) -- only 'AND' or 'OR'
 	,@JobId INT
-	,@UpdateUserId INT
-	,@CreateUserId INT
+	,@CreateDate DATETIME
+	,@CreateUserId INT -- Fkey
+	,@UpdateDate DATETIME
+	,@UpdateUserId INT -- Fkey
 	,@Active BIT
 	,@JobNameCompareLogic VARCHAR(10)
 	,@JobName VARCHAR(50)
-	,@LogFinishesCompareLogic VARCHAR(10)
-	,@LogFinishes BIT
+	,@ExecFileCompareLogic VARCHAR(10)
+	,@ExecFile VARCHAR(200)
 )
 
 AS
@@ -29,9 +30,7 @@ AS
 SET NOCOUNT ON
 
 DECLARE @ErrorCode INT = -1
-DECLARE @BasePathNameValueName VARCHAR(100) = 'JobsProcessRunnerPath'
-DECLARE @BasePathNameValueGroupName VARCHAR(100) = 'Jobs'
-DECLARE @BasePath VARCHAR(500) = ''
+
 
 IF ( @GroupingLogic IS NULL ) BEGIN
 	SET @GroupingLogic = 'AND'
@@ -43,10 +42,15 @@ ELSE BEGIN
 	END
 END
 
-IF (@BasePathNameValueName IS NOT NULL AND LTRIM(RTRIM(@BasePathNameValueName))<>'') BEGIN
-	SELECT @BasePath=[Value] FROM [Base].[NameValues] WITH (NOLOCK) WHERE [NameGroup]=@BasePathNameValueGroupName AND [Name]=@BasePathNameValueName
+IF (@JobName IS NOT NULL AND @JobNameCompareLogic IS NULL) BEGIN
+	SET @JobNameCompareLogic = '='
 END
-SET @BasePath = LTRIM(RTRIM(@BasePath))
+
+IF (@ExecFile IS NOT NULL AND @ExecFileCompareLogic IS NULL) BEGIN
+	SET @ExecFileCompareLogic = '='
+END
+
+
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -55,17 +59,18 @@ SET @BasePath = LTRIM(RTRIM(@BasePath))
 IF (@GroupingLogic = 'AND') BEGIN  
 
 	SELECT [j].[JobId]
-			, [j].[RecordComment], [j].[UpdateDate], [j].[UpdateUserId], [usrs].[UserName] AS [UpdateUserName], [j].[CreateDate], [j].[CreateUserId], [usrs1].[UserName] AS [CreateUserName], [j].[Active]
-							, [j].[SortText], [j].[JobName], [j].[JobFriendlyName], [j].[Description]
-							, [j].[ExecPath], [j].[ExecFile], REPLACE([j].[ExecPath], '{BasePath}', @BasePath) + '\' + [j].[ExecFile] AS [FullPath]
-							, [j].[ParamString], [j].[LogStarts]
-							, [j].[LogFinishes]
+				, [j].[CreateDate], [j].[CreateUserId], [usrs].[UserName] AS [CreateUserName], [j].[UpdateDate], [j].[UpdateUserId], [usrs1].[UserName] AS [UpdateUserName]
+				, [j].[Active], [j].[SortText]
+				, [j].[JobName], [j].[JobFriendlyName], [j].[Description], [j].[ExecPath], [j].[ExecFile], [j].[ParamString]
+				, [j].[LogStarts], [j].[LogFinishes]
 	FROM [Service].[Jobs] [j] WITH (NOLOCK)
-				LEFT OUTER JOIN [Base].[Users] [usrs] WITH (NOLOCK) ON [j].[UpdateUserId]=[usrs].[UserId]
-								LEFT OUTER JOIN [Base].[Users] [usrs1] WITH (NOLOCK) ON [j].[CreateUserId]=[usrs1].[UserId]
+				LEFT OUTER JOIN [Base].[Users] [usrs] WITH (NOLOCK) ON [j].[CreateUserId] = [usrs].[UserId]
+				LEFT OUTER JOIN [Base].[Users] [usrs1] WITH (NOLOCK) ON [j].[UpdateUserId] = [usrs1].[UserId]
 	WHERE       ((@JobId IS NULL) OR (@JobId IS NOT NULL AND @JobId = [j].[JobId]) )
-							AND ((@UpdateUserId IS NULL) OR (@UpdateUserId IS NOT NULL AND @UpdateUserId = [j].[UpdateUserId]) )
+							 AND ((@CreateDate IS NULL) OR (@CreateDate IS NOT NULL AND @CreateDate = [j].[CreateDate]) )
 							AND ((@CreateUserId IS NULL) OR (@CreateUserId IS NOT NULL AND @CreateUserId = [j].[CreateUserId]) )
+							 AND ((@UpdateDate IS NULL) OR (@UpdateDate IS NOT NULL AND @UpdateDate = [j].[UpdateDate]) )
+							AND ((@UpdateUserId IS NULL) OR (@UpdateUserId IS NOT NULL AND @UpdateUserId = [j].[UpdateUserId]) )
 							AND ((@Active IS NULL) OR (@Active IS NOT NULL AND @Active = [j].[Active]) )
 							AND ((@JobName IS NULL) OR ( @JobName IS NOT NULL AND ((@JobNameCompareLogic = '='        AND [j].[JobName] = @JobName)
 																					OR (@JobNameCompareLogic = '<>'       AND [j].[JobName] <> @JobName)
@@ -73,11 +78,15 @@ IF (@GroupingLogic = 'AND') BEGIN
 																					OR (@JobNameCompareLogic = 'NOT LIKE' AND [j].[JobName] NOT LIKE @JobName)
 																					OR (@JobNameCompareLogic = 'IN'       AND [j].[JobName] IN (SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@JobName, '''', ''''''), ',', '''')))
 																					OR (@JobNameCompareLogic = 'NOT IN'   AND [j].[JobName] NOT IN (SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@JobName, '''', ''''''), ',', ''''))) )))
-							AND ((@LogFinishes IS NULL) OR ( @LogFinishes IS NOT NULL AND ((@LogFinishesCompareLogic = '='        AND [j].[LogFinishes] =  @LogFinishes)
-																					OR (@LogFinishesCompareLogic = '<>' AND [j].[LogFinishes] <> @LogFinishes) )))
+							AND ((@ExecFile IS NULL) OR ( @ExecFile IS NOT NULL AND ((@ExecFileCompareLogic = '='        AND [j].[ExecFile] = @ExecFile)
+																					OR (@ExecFileCompareLogic = '<>'       AND [j].[ExecFile] <> @ExecFile)
+																					OR (@ExecFileCompareLogic = 'LIKE'     AND [j].[ExecFile] LIKE @ExecFile)
+																					OR (@ExecFileCompareLogic = 'NOT LIKE' AND [j].[ExecFile] NOT LIKE @ExecFile)
+																					OR (@ExecFileCompareLogic = 'IN'       AND [j].[ExecFile] IN (SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@ExecFile, '''', ''''''), ',', '''')))
+																					OR (@ExecFileCompareLogic = 'NOT IN'   AND [j].[ExecFile] NOT IN (SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@ExecFile, '''', ''''''), ',', ''''))) )))
 	ORDER BY [j].[SortText]
 	SET @ErrorCode = @@ERROR
-	IF (@ErrorCode<>0) BEGIN
+	IF (@ErrorCode <> 0) BEGIN
 		RAISERROR('Error retrieving Job(s). Error code=%d. Grouping logic = AND.',18,1,@ErrorCode)
 		GOTO HANDLE_ERROR
 	END
@@ -86,17 +95,18 @@ END
 ELSE BEGIN  -- 'OR' 
 
 	SELECT [j].[JobId]
-			, [j].[RecordComment], [j].[UpdateDate], [j].[UpdateUserId], [usrs].[UserName] AS [UpdateUserName], [j].[CreateDate], [j].[CreateUserId], [usrs1].[UserName] AS [CreateUserName], [j].[Active]
-							, [j].[SortText], [j].[JobName], [j].[JobFriendlyName], [j].[Description]
-							, [j].[ExecPath], [j].[ExecFile], REPLACE([j].[ExecPath], '{BasePath}', @BasePath) + '\' + [j].[ExecFile] AS [FullPath]
-							, [j].[ParamString], [j].[LogStarts]
-							, [j].[LogFinishes]
+				, [j].[CreateDate], [j].[CreateUserId], [usrs].[UserName] AS [CreateUserName], [j].[UpdateDate], [j].[UpdateUserId], [usrs1].[UserName] AS [UpdateUserName]
+				, [j].[Active], [j].[SortText]
+				, [j].[JobName], [j].[JobFriendlyName], [j].[Description], [j].[ExecPath], [j].[ExecFile], [j].[ParamString]
+				, [j].[LogStarts], [j].[LogFinishes]
 	FROM [Service].[Jobs] [j] WITH (NOLOCK)
-				LEFT OUTER JOIN [Base].[Users] [usrs] WITH (NOLOCK) ON [j].[UpdateUserId]=[usrs].[UserId]
-								LEFT OUTER JOIN [Base].[Users] [usrs1] WITH (NOLOCK) ON [j].[CreateUserId]=[usrs1].[UserId]
+				LEFT OUTER JOIN [Base].[Users] [usrs] WITH (NOLOCK) ON [j].[CreateUserId] = [usrs].[UserId]
+				LEFT OUTER JOIN [Base].[Users] [usrs1] WITH (NOLOCK) ON [j].[UpdateUserId] = [usrs1].[UserId]
 	WHERE      (@JobId IS NOT NULL AND @JobId = [j].[JobId])
-							OR (@UpdateUserId IS NOT NULL AND @UpdateUserId = [j].[UpdateUserId])
+							OR (@CreateDate IS NOT NULL AND @CreateDate = [j].[CreateDate])
 							OR (@CreateUserId IS NOT NULL AND @CreateUserId = [j].[CreateUserId])
+							OR (@UpdateDate IS NOT NULL AND @UpdateDate = [j].[UpdateDate])
+							OR (@UpdateUserId IS NOT NULL AND @UpdateUserId = [j].[UpdateUserId])
 							OR (@Active IS NOT NULL AND @Active = [j].[Active])
 							OR (@JobName IS NOT NULL	AND ( (@JobNameCompareLogic = '='        AND [j].[JobName] = @JobName)
 															OR (@JobNameCompareLogic = '<>'       AND [j].[JobName] <> @JobName)
@@ -104,11 +114,15 @@ ELSE BEGIN  -- 'OR'
 															OR (@JobNameCompareLogic = 'NOT LIKE' AND [j].[JobName] NOT LIKE @JobName)
 															OR (@JobNameCompareLogic = 'IN'       AND [j].[JobName] IN(SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@JobName, '''', ''''''), ',', '''')))
 															OR (@JobNameCompareLogic = 'NOT IN'   AND [j].[JobName] NOT IN(SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@JobName, '''', ''''''), ',', '''')) )))
-							OR (@LogFinishes IS NOT NULL	AND ( (@LogFinishesCompareLogic = '='        AND [j].[LogFinishes] = @LogFinishes)
-															OR (@LogFinishesCompareLogic = '<>'       AND [j].[LogFinishes] <> @LogFinishes) ))
+							OR (@ExecFile IS NOT NULL	AND ( (@ExecFileCompareLogic = '='        AND [j].[ExecFile] = @ExecFile)
+															OR (@ExecFileCompareLogic = '<>'       AND [j].[ExecFile] <> @ExecFile)
+															OR (@ExecFileCompareLogic = 'LIKE'     AND [j].[ExecFile] LIKE @ExecFile)
+															OR (@ExecFileCompareLogic = 'NOT LIKE' AND [j].[ExecFile] NOT LIKE @ExecFile)
+															OR (@ExecFileCompareLogic = 'IN'       AND [j].[ExecFile] IN(SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@ExecFile, '''', ''''''), ',', '''')))
+															OR (@ExecFileCompareLogic = 'NOT IN'   AND [j].[ExecFile] NOT IN(SELECT Val FROM Base.ParseDelimitedTextToTable(REPLACE(@ExecFile, '''', ''''''), ',', '''')) )))
 	ORDER BY [j].[SortText]
 	SET @ErrorCode = @@ERROR
-	IF (@ErrorCode<>0) BEGIN
+	IF (@ErrorCode <> 0) BEGIN
 		RAISERROR('Error retrieving Job(s). Error code=%d. Grouping logic = OR.',18,1,@ErrorCode)
 		GOTO HANDLE_ERROR
 	END

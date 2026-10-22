@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Builds an application with an initial sys admin user for Job.
--- Create Date: 2026.07.28
+-- Create Date: 2026.10.22
 -- Created By : Triadcore (ACB)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DECLARE @AppName VARCHAR(100) = 'JobApi'
@@ -8,6 +8,7 @@ DECLARE @AppVersion VARCHAR(25) = '2019'
 DECLARE @AppType VARCHAR(100) = 'WebApi'
 DECLARE @ParentAppId INT = NULL
 DECLARE @Desc VARCHAR(2000) = 'The web API for managing Job{} data.'
+DECLARE @BaseName VARCHAR(200) = 'Job'
 DECLARE @DispName VARCHAR(200) = 'Jobs'
 DECLARE @SortText VARCHAR(100) = '095-Service-JobApi'
 DECLARE @AdminUser VARCHAR(100) = 'lvictoria'
@@ -15,7 +16,7 @@ DECLARE @UpdateUser VARCHAR(100) = 'default'
 
 
 -- Get parent app ------------------------------------------
-SELECT @ParentAppId=[ApplicationId]
+SELECT @ParentAppId = [ApplicationId]
 FROM [App].[Applications] WITH (NOLOCK)
 WHERE [ApplicationName] LIKE 'AdminService'
 ORDER BY [ApplicationName]
@@ -27,6 +28,7 @@ EXEC [App].[BuildApplication]
      ,NULL				-- @ApplicationId INT
      ,@AppVersion		-- @ApplicationVersion VARCHAR(25)
 	 ,@Desc				-- @Description VARCHAR(2000)
+	 ,@BaseName         -- @BaseName VARCHAR(200)
 	 ,@DispName			-- @DisplayName VARCHAR(200)
      ,@AppType			-- @ApplicationTypeName VARCHAR(100)
      ,NULL				-- @ApplicationTypeId INT
@@ -43,18 +45,26 @@ EXEC [App].[BuildApplication]
 
 
 ---------------------------------------------------------------------------
-EXEC App.GetApplicationUserRole
-	 null		--@ApplicationUserRoleId INT
-	,null		--@ApplicationId INT
-	,'JobApi' --@ApplicationName VARCHAR(100)
-	,null		--@UserId INT
-	,@AdminUser			--@UserName VARCHAR(100)
-	,null		--@RoleId INT
-	,null		--@RoleName VARCHAR(100)
-	,null		--@ApplicationRoleId
-	,null		--@Active BIT
-	,null		--@UpdateUserId INT
+EXEC [App].[GetApplicationUserRoles]
+	 null		--@GroupingLogic
+	,null		--@ApplicationUserRoleId INT
 	,null		--@CreateUserId INT
+	,null		--@UpdateUserId INT
+	,null		--@Active BIT
+	,null		--@AppRoleId  -- [add param @ApplicationRoleId as a search criteria]
+	,null		--@ActiveAppRole BIT
+	,null		--@ApplicationId INT
+	,null		--@ApplicationNameCompareLogic VARCHAR(10)
+	,'JobApi'  --@ApplicationName VARCHAR(100)
+	,null		--@ActiveApp BIT
+	,null		--@UserId INT
+	,null		--@UserNameCompareLogic VARCHAR(10)
+	,@AdminUser --@UserName VARCHAR(100)
+	,null		--@ActiveUser BIT
+	,null		--@RoleId INT
+	,null		--@RoleNameCompareLogic VARCHAR(10)
+	,null		--@RoleName VARCHAR(100)
+	,null		--@ActiveRole INT
 
 
 ---------------------------------------------------------------------------

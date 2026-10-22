@@ -1,7 +1,7 @@
 /******************************************************************************************************************************************************
 * Name        : JobScheduleType.cs
 * Purpose     : Provides JobScheduleType support.
-* Create Date : 2023.07.01
+* Create Date : 2026.10.22
 * Created By  : Triadcore (ACB)
 ******************************************************************************************************************************************************/
 using System;
@@ -15,8 +15,8 @@ using Triadcore;
 namespace Triadcore.Service
 {
 
-
-    public class JobScheduleTypesQuickList : Triadcore.Base.QuickListBase
+	
+	public class JobScheduleTypesQuickList : Triadcore.Base.QuickListBase
     {
 
 
@@ -36,61 +36,67 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// Gets or sets the compare logic to filter the The unique job schedule type name..
-        /// </summary>
-        public Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic JobScheduleTypeNameCompareLogic
-        {
-            get
-            {
-                return this.jobScheduleTypeNameCompareLogic;
-            }
-            set
-            {
-                this.jobScheduleTypeNameCompareLogic = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the JobScheduleTypeName value for filtering.
-        /// </summary>
-        public string JobScheduleTypeName
-        {
-            get
-            {
-                return this.jobScheduleTypeName;
-            }
-            set
-            {
-                this.jobScheduleTypeName = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the compare logic to filter the A markup template of how the type is described..
-        /// </summary>
-        public Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic InstanceDescriptionCompareLogic
-        {
-            get
-            {
-                return this.instanceDescriptionCompareLogic;
-            }
-            set
-            {
-                this.instanceDescriptionCompareLogic = value;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the InstanceDescription value for filtering.
-        /// </summary>
-        public string InstanceDescription
-        {
-            get
-            {
-                return this.instanceDescription;
-            }
-            set
-            {
-                this.instanceDescription = value;
-            }
-        }
+		/// JobScheduleTypeName compare logic for filtering.
+		/// </summary>
+		public string JobScheduleTypeNameCompareLogic
+		{
+			get
+			{
+				return this.jobScheduleTypeNameCompareLogic;
+			}
+			set
+			{
+				this.jobScheduleTypeNameCompareLogic = value;
+			}
+		}
+		/// <summary>
+		/// The unique job schedule type name.
+		/// </summary>
+		public string JobScheduleTypeName
+		{
+			get
+			{
+				return this.jobScheduleTypeName;
+			}
+			set
+			{
+				if (this.jobScheduleTypeName != value)
+				{
+					this.jobScheduleTypeName = value;
+				}
+			}
+		}
+		/// <summary>
+		/// InstanceDescription compare logic for filtering.
+		/// </summary>
+		public string InstanceDescriptionCompareLogic
+		{
+			get
+			{
+				return this.instanceDescriptionCompareLogic;
+			}
+			set
+			{
+				this.instanceDescriptionCompareLogic = value;
+			}
+		}
+		/// <summary>
+		/// A markup template of how the type is described.
+		/// </summary>
+		public string InstanceDescription
+		{
+			get
+			{
+				return this.instanceDescription;
+			}
+			set
+			{
+				if (this.instanceDescription != value)
+				{
+					this.instanceDescription = value;
+				}
+			}
+		}
         /// <summary>
         /// Gets a list of data items converted from Triadcore.Base.QuickListItemBase{}.
         /// Provided for convenient data binding. Converted at runtime.
@@ -107,19 +113,27 @@ namespace Triadcore.Service
                 return listOut;
             }
         }
+        /// <summary>
+        /// ACB build date.
+        /// </summary>
+        public string AcbBuildDate
+        {
+            get
+            {
+                return this.acbBuildDate;
+            }
+        }
         #endregion
 
 
         #region LocalItems
         private Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic groupingLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic.NULL;
-        private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic jobScheduleTypeNameCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private string jobScheduleTypeName = null;
-        private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic descriptionCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private string description = null;
-        private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic instanceDescriptionCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private string instanceDescription = null;
-        private Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic noteCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-        private string note = null;
+        private string jobScheduleTypeNameCompareLogic = null; 
+		private string jobScheduleTypeName = null;
+		private string instanceDescriptionCompareLogic = null; 
+		private string instanceDescription = null;
+        //
+        protected string acbBuildDate = "2026.10.22";
         #endregion
 
 
@@ -155,6 +169,7 @@ namespace Triadcore.Service
                 base.sqlCommand = new System.Data.SqlClient.SqlCommand();
                 base.sqlCommand.CommandType = CommandType.StoredProcedure;
                 base.sqlCommand.CommandText = "[Service].[GetJobScheduleTypes]";
+                base.sqlCommand.CommandTimeout = 0;
 
                 #region Set stored procedure parameters
                 if (this.groupingLogic == Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic.NULL)
@@ -165,72 +180,81 @@ namespace Triadcore.Service
                 {
                     base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", this.groupingLogic.ToString());
                 }
-
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", System.DBNull.Value);
-                if (base.createUserId != null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@CreateUserId", base.createUserId);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                }
-                if (base.updateUserId != null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                }
-                if (base.active != Triadcore.ClassLibrary.Utilities.TriStateBoolean.Undefined)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@Active", base.active);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                }
-                if (this.jobScheduleTypeNameCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.jobScheduleTypeNameCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", this.jobScheduleTypeName);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", System.DBNull.Value);
-                }
-                if (this.descriptionCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@DescriptionCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.descriptionCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@Description", this.description);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@DescriptionCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@Description", System.DBNull.Value);
-                }
-                if (this.instanceDescriptionCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.instanceDescriptionCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", this.instanceDescription);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value);
-                }
-                if (this.noteCompareLogic != Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null)
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@NoteCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogicToString(this.noteCompareLogic));
-                    base.sqlCommand.Parameters.AddWithValue("@Note", this.note);
-                }
-                else
-                {
-                    base.sqlCommand.Parameters.AddWithValue("@NoteCompareLogic", System.DBNull.Value);
-                    base.sqlCommand.Parameters.AddWithValue("@Note", System.DBNull.Value);
-                }
+			    base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", System.DBNull.Value);
+			    if (base.createDate != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateDate", base.createDate);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateDate", System.DBNull.Value);
+				}
+				// Fkey
+				if (base.createUserId != null && base.createUserId != Triadcore.ClassLibrary.Utilities.DefaultInitializeInteger)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateUserId", base.createUserId); // Fkey
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value); // Fkey
+				}
+				if (base.updateDate != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateDate", base.updateDate);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateDate", System.DBNull.Value);
+				}
+				// Fkey
+				if (base.updateUserId != null && base.updateUserId != Triadcore.ClassLibrary.Utilities.DefaultInitializeInteger)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId); // Fkey
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value); // Fkey
+				}
+				if (base.active != null && base.active != Triadcore.ClassLibrary.Utilities.TriStateBoolean.Undefined)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@Active", base.active);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
+				}
+				if (this.jobScheduleTypeNameCompareLogic != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@jobScheduleTypeNameCompareLogic", this.jobScheduleTypeNameCompareLogic);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@jobScheduleTypeNameCompareLogic", System.DBNull.Value);
+				}
+				if (this.jobScheduleTypeName != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", this.jobScheduleTypeName);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", System.DBNull.Value);
+				}
+				if (this.instanceDescriptionCompareLogic != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@instanceDescriptionCompareLogic", this.instanceDescriptionCompareLogic);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@instanceDescriptionCompareLogic", System.DBNull.Value);
+				}
+				if (this.instanceDescription != null)
+				{
+					base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", this.instanceDescription);
+				}
+				else
+				{
+					base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value);
+				}
                 #endregion
 
             }
@@ -252,14 +276,14 @@ namespace Triadcore.Service
                     uid = sqlDr.GetInt32(0);
                     Triadcore.Service.JobScheduleTypesQuickListItem item = new Triadcore.Service.JobScheduleTypesQuickListItem(uid);
                     item.CreateDate = sqlDr.GetDateTime(1);
-                    item.CreateUserId = sqlDr.GetInt32(2);
-                    item.CreateUserName = sqlDr.GetString(3);
-                    item.UpdateDate = sqlDr.GetDateTime(4);
-                    item.UpdateUserId = sqlDr.GetInt32(5);
-                    item.UpdateUserName = sqlDr.GetString(6);
-                    item.Active = sqlDr.GetBoolean(8);
-                    item.JobScheduleTypeName = sqlDr.GetString(9);
-                    item.InstanceDescription = sqlDr.GetString(11);
+					item.CreateUserId = sqlDr.GetInt32(2); // Fkey
+					item.CreateUserName = sqlDr.GetString(3);  // Fkey alias to CreateUserId
+					item.UpdateDate = sqlDr.GetDateTime(4);
+					item.UpdateUserId = sqlDr.GetInt32(5); // Fkey
+					item.UpdateUserName = sqlDr.GetString(6);  // Fkey alias to UpdateUserId
+					item.Active = sqlDr.GetBoolean(7);
+					item.JobScheduleTypeName = sqlDr.GetString(8);
+					item.InstanceDescription = sqlDr.GetString(10);
                     base.itemsQuickList.Add(item);
                     base.uidList.Add(uid);
                     lastUid = uid;
@@ -268,11 +292,11 @@ namespace Triadcore.Service
             }
             catch (SqlException sqlEx)
             {
-                throw new Exception("A SQL exception occurred in Triadcore.Service.JobScheduleType.GetItems() while retrieving id list. The error code is: " + sqlEx.Number.ToString() + ". The exception is: " + sqlEx.Message);
+                throw new Exception("A SQL exception occurred in Triadcore.Service.JobScheduleTypesQuickList.GetItems() while retrieving data list. The error code is: " + sqlEx.Number.ToString() + ". The exception is: " + sqlEx.Message);
             }
             catch (Exception ex)
             {
-                throw new Exception("An exception occurred in Triadcore.Service.JobScheduleType.GetItems() while retrieving id list. The exception is: " + ex.Message);
+                throw new Exception("An exception occurred in Triadcore.Service.JobScheduleTypesQuickList.GetItems() while retrieving data list. The exception is: " + ex.Message);
             }
             finally
             {
@@ -298,14 +322,10 @@ namespace Triadcore.Service
             base.ResetCriteria();
 
             this.groupingLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlGroupingLogic.NULL;
-            this.jobScheduleTypeNameCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.jobScheduleTypeName = null;
-            this.descriptionCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.description = null;
-            this.instanceDescriptionCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.instanceDescription = null;
-            this.noteCompareLogic = Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.Null;
-            this.note = null;
+            this.jobScheduleTypeNameCompareLogic = null;
+			this.jobScheduleTypeName = null;
+			this.instanceDescriptionCompareLogic = null;
+			this.instanceDescription = null;
 
             return;
 
@@ -326,9 +346,12 @@ namespace Triadcore.Service
     }
 
 
-    public class JobScheduleTypesQuickListItem : Triadcore.Base.QuickListItemBase
+	public class JobScheduleTypesQuickListItem : Triadcore.Base.QuickListItemBase
     {
 
+        /// <summary>
+	    /// The JobScheduleType unique identifier.
+	    /// </summary>    
         public int JobScheduleTypeId
         {
             get
@@ -337,20 +360,30 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// The unique job schedule type name.
-        /// </summary>
-        public string JobScheduleTypeName
-        {
-            get;
-            set;
-        }
+		/// The unique job schedule type name.
+		/// </summary>
+		public string JobScheduleTypeName
+		{
+			get;
+			set;
+		}
+		/// <summary>
+		/// A markup template of how the type is described.
+		/// </summary>
+		public string InstanceDescription
+		{
+			get;
+			set;
+		}
         /// <summary>
-        /// A markup template of how the type is described.
+        /// ACB build date.
         /// </summary>
-        public string InstanceDescription
+        public string AcbBuildDate
         {
-            get;
-            set;
+            get
+            {
+                return "2026.10.22";
+            }
         }
 
         public JobScheduleTypesQuickListItem(int itemUid) : base(itemUid)
@@ -359,8 +392,9 @@ namespace Triadcore.Service
 
     }
 
+
 
-    public class JobScheduleType : Triadcore.Base.ItemBase
+	public class JobScheduleType : Triadcore.Base.ItemBase
     {
 
 
@@ -376,87 +410,97 @@ namespace Triadcore.Service
             }
         }
         /// <summary>
-        /// The unique job schedule type name.
-        /// </summary>
-        public string JobScheduleTypeName
-        {
-            get
-            {
-                return this.jobScheduleTypeName;
-            }
-            set
-            {
-                if (this.jobScheduleTypeName != value)
-                {
-                    this.jobScheduleTypeName = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
+		/// The unique job schedule type name..
+		/// </summary>
+		public string JobScheduleTypeName
+		{
+			get
+			{
+				return this.jobScheduleTypeName;
+			}
+			set
+			{
+				if (this.jobScheduleTypeName != value)
+				{
+					this.jobScheduleTypeName = value;
+					if (!this.isNew)
+					{
+						this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// The job schedule type description..
+		/// </summary>
+		public string Description
+		{
+			get
+			{
+				return this.description;
+			}
+			set
+			{
+				if (this.description != value)
+				{
+					this.description = value;
+					if (!this.isNew)
+					{
+						this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// A markup template of how the type is described..
+		/// </summary>
+		public string InstanceDescription
+		{
+			get
+			{
+				return this.instanceDescription;
+			}
+			set
+			{
+				if (this.instanceDescription != value)
+				{
+					this.instanceDescription = value;
+					if (!this.isNew)
+					{
+						this.isDirty = true;
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// Free-text  notes..
+		/// </summary>
+		public string Note
+		{
+			get
+			{
+				return this.note;
+			}
+			set
+			{
+				if (this.note != value)
+				{
+					this.note = value;
+					if (!this.isNew)
+					{
+						this.isDirty = true;
+					}
+				}
+			}
+		}
         /// <summary>
-        /// The job schedule type description.
+        /// ACB build date.
         /// </summary>
-        public string Description
+        public string AcbBuildDate
         {
             get
             {
-                return this.description;
-            }
-            set
-            {
-                if (this.description != value)
-                {
-                    this.description = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// A markup template of how the type is described.
-        /// </summary>
-        public string InstanceDescription
-        {
-            get
-            {
-                return this.instanceDescription;
-            }
-            set
-            {
-                if (this.instanceDescription != value)
-                {
-                    this.instanceDescription = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// User notes.
-        /// </summary>
-        public string Note
-        {
-            get
-            {
-                return this.note;
-            }
-            set
-            {
-                if (this.note != value)
-                {
-                    this.note = value;
-                    if (!this.isNew)
-                    {
-                        this.isDirty = true;
-                    }
-                }
+                return this.acbBuildDate;
             }
         }
         #endregion
@@ -464,14 +508,16 @@ namespace Triadcore.Service
 
         #region Local Items
         private string jobScheduleTypeName = "";
-        private string description = "";
-        private string instanceDescription = "";
-        private string note = "";
+		private string description = "";
+		private string instanceDescription = "";
+		private string note = "";
+		//
+		private string jobScheduleTypeNameOld = "";
+		private string descriptionOld = "";
+		private string instanceDescriptionOld = "";
+		private string noteOld = "";
         //
-        private string jobScheduleTypeNameOld = "";
-        private string descriptionOld = "";
-        private string instanceDescriptionOld = "";
-        private string noteOld = "";
+        protected string acbBuildDate = "2026.10.22";
         #endregion
 
 
@@ -481,8 +527,7 @@ namespace Triadcore.Service
         }
         public JobScheduleType(Triadcore.ClassLibrary.DataConn dbObject, Triadcore.Base.AppUser user, int jobScheduleTypeId) : base(dbObject, user, jobScheduleTypeId)
         {
-        }
-        #endregion
+        }        #endregion
 
 
         #region Methods
@@ -512,20 +557,18 @@ namespace Triadcore.Service
                 base.sqlCommand.CommandText = "[Service].[GetJobScheduleTypes]";
 
                 #region Set stored procedure parameters
-                base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);
+                base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);  // forced DB Null
                 base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", base.itemUid);
-                base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@DescriptionCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Description", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@NoteCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Note", System.DBNull.Value);
-                #endregion
+                base.sqlCommand.Parameters.AddWithValue("@CreateDate", System.DBNull.Value); // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value); // FKey
+				base.sqlCommand.Parameters.AddWithValue("@UpdateDate", System.DBNull.Value); // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value); // FKey
+				base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value); // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", System.DBNull.Value);  // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", System.DBNull.Value); // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", System.DBNull.Value);  // forced DB Null
+				base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value); // forced DB Null
+			    #endregion
 
                 // Execute the stored procedure
                 sqlDr = base.sqlCommand.ExecuteReader();
@@ -536,17 +579,16 @@ namespace Triadcore.Service
                     sqlDr.Read();
                     base.itemUid = sqlDr.GetInt32(0);
                     base.createDate = sqlDr.GetDateTime(1);
-                    base.createUserId = sqlDr.GetInt32(2);
-                    base.createUserName = sqlDr.GetString(3);
-                    base.updateDate = sqlDr.GetDateTime(4);
-                    base.updateUserId = sqlDr.GetInt32(5);
-                    base.updateUserName = sqlDr.GetString(6);
-                    base.recordComment = sqlDr.GetString(7);
-					base.active = sqlDr.GetBoolean(8);
-					this.jobScheduleTypeName = sqlDr.GetString(9);
-                    this.description = sqlDr.GetString(10);
-                    this.instanceDescription = sqlDr.GetString(11);
-                    this.note = sqlDr.GetString(12);
+					base.createUserId = sqlDr.GetInt32(2); // Fkey
+					base.createUserName = sqlDr.GetString(3);  // Fkey alias to CreateUserId
+					base.updateDate = sqlDr.GetDateTime(4);
+					base.updateUserId = sqlDr.GetInt32(5); // Fkey
+					base.updateUserName = sqlDr.GetString(6);  // Fkey alias to UpdateUserId
+					base.active = sqlDr.GetBoolean(7);
+					this.jobScheduleTypeName = sqlDr.GetString(8);
+					this.description = sqlDr.GetString(9);
+					this.instanceDescription = sqlDr.GetString(10);
+					this.note = sqlDr.GetString(11);
                     base.isValid = true;
                 }
                 else
@@ -582,7 +624,7 @@ namespace Triadcore.Service
             finally
             {
 
-                if (sqlDr != null && !sqlDr.IsClosed)
+                if (sqlDr != null && !sqlDr.IsClosed )
                 {
                     sqlDr.Close();
                 }
@@ -592,47 +634,12 @@ namespace Triadcore.Service
 
             if (base.isValid)
             {
-                //
+                // no-op
             }
 
             base.PostGetItem();
 
             return;
-
-        }
-
-        /// <summary>
-        /// Ensures that the item data is valid.
-        /// Failed validation error messages are written to the ClientMessages{} property.
-        /// </summary>
-        /// <returns>True if the data is valid, False otherwise.</returns>
-        public override bool ValidateItem()
-        {
-
-            bool isValid = true;
-
-            if (this.jobScheduleTypeName == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The JobScheduleTypeName cannot be null.");
-            }
-            if (this.description == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The Description cannot be null.");
-            }
-            if (this.instanceDescription == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The InstanceDescription cannot be null.");
-            }
-            if (this.note == null)
-            {
-                isValid = false;
-                base.errorMessages.Add("The Note cannot be null.");
-            }
-
-            return isValid;
 
         }
 
@@ -647,19 +654,20 @@ namespace Triadcore.Service
             if (!this.ValidateItem())
             {
                 StringBuilder msg = new StringBuilder();
+                int cnt = 0;
                 msg.Append("Validation Error: ");
                 if (this.errorMessages.Count > 0)
                 {
                     foreach (string s in this.errorMessages)
                     {
-                        msg.Append(" " + s);
+                        msg.Append(" [" + cnt.ToString() + "] " + s);
                     }
                 }
                 else
                 {
                     msg.Append(" Data item failed to validate.");
                 }
-                throw new Exception(msg.ToString());
+                throw new Exception(msg.ToString().Trim());
             }
 
             try
@@ -672,7 +680,7 @@ namespace Triadcore.Service
                 base.sqlCommand.Connection = base.database.SQLConnection;
                 base.sqlCommand.CommandType = CommandType.StoredProcedure;
                 base.sqlCommand.CommandText = "[Service].[UpdateJobScheduleType]";
-
+			
                 #region Set stored procedure parameters
                 if (!base.isNew)
                 {
@@ -684,10 +692,10 @@ namespace Triadcore.Service
                 }
                 base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updateUserId);
                 base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", this.jobScheduleTypeName);
-                base.sqlCommand.Parameters.AddWithValue("@Description", this.description);
-                base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", this.instanceDescription);
-                base.sqlCommand.Parameters.AddWithValue("@Note", this.note);
-                #endregion
+				base.sqlCommand.Parameters.AddWithValue("@Description", this.description);
+				base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", this.instanceDescription);
+				base.sqlCommand.Parameters.AddWithValue("@Note", this.note);
+			    #endregion
 
                 // Execute stored procedure.
                 int lastUpdatedId = Convert.ToInt32(base.sqlCommand.ExecuteScalar()); // Returns Id of last updated/inserted data item
@@ -736,96 +744,6 @@ namespace Triadcore.Service
             }
 
             base.PostUpdateItem();
-
-            return;
-
-        }
-
-        /// <summary>
-        /// Sets the Active indicator in the datastore.
-        /// </summary>
-        public override void DeleteItem()
-        {
-
-            base.DeleteItem();
-
-            base.sqlCommand = new System.Data.SqlClient.SqlCommand();
-            int returnCode = 0;
-
-            if (base.isNew)
-            {
-                throw new Exception("Cannot delete a new data item.");
-            }
-
-            // Delete the data item.
-            try
-            {
-
-                base.database.OpenConnection();
-
-                base.sqlCommand.Connection = base.database.SQLConnection;
-                base.sqlCommand.CommandType = CommandType.StoredProcedure;
-                base.sqlCommand.CommandText = "[Service].[DeleteJobScheduleType]";
-
-                #region Set stored procedure parameters
-                base.sqlCommand.Parameters.Clear();
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", base.itemUid);
-                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updatingUser.UserId);
-                #endregion
-
-                // Execute stored procedure.
-                returnCode = Convert.ToInt32(base.sqlCommand.ExecuteScalar()); // Returns an error code. 0=no error.
-
-                if (returnCode == 0)
-                {
-                    base.ItemSuccessfullyDeleted();
-                }
-                else
-                {
-                    throw new Exception("WARNING! The attempt to delete, the data item returned a non-zero return code.  The return code is: " + returnCode.ToString() + ".");
-                }
-
-            }
-            catch (SqlException sqlEx)
-            {
-
-                // Check if there was a reference constraint error.
-                if (sqlEx.Number == 547)
-                {
-                    returnCode = 1;
-                }
-                else
-                {
-                    throw new Exception("A SQL exception occurred in Triadcore.Service.JobScheduleType.DeleteItem().  The error code is: " + sqlEx.Number.ToString() + ". The execption is: " + sqlEx.Message);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("An exception occurred in Triadcore.Service.JobScheduleType.DeleteItem(). The exception is: " + ex.Message);
-
-            }
-            finally
-            {
-
-                base.database.CloseConnectionConditionally();
-
-            }
-
-            // The data item could not be deleted because other data contains a reference to it.
-            // Set the data item as INACTIVE.
-            if (returnCode == 1)
-            {
-                try
-                {
-                    this.SetActiveIndicator(false);
-                    base.clientMessages.Add("The data item could not be deleted in the database because other data contains a reference to it. The data was instead set to an INACTIVE status in the database.");
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("The data item could not be deleted in the database because other data contains a reference to it. An attempt was made to set the data to an INACTIVE status in the database but an error occured:" + ex.Message);
-                }
-            }
 
             return;
 
@@ -915,22 +833,93 @@ namespace Triadcore.Service
             return;
 
         }
-
-
-
+      
         /// <summary>
-        /// Restores the data that has not been saved to the datastore to their original values.
+        /// Deleltes the item from the datastore.  If the item has a reference constraint and cannot be delete, it's set to Inactive.
         /// </summary>
-        public override void UndoChanges()
+        public override void DeleteItem()
         {
 
-            if (base.isDirty)
+            base.DeleteItem();
+
+            base.sqlCommand = new System.Data.SqlClient.SqlCommand();
+            int returnCode = 0;
+            string deleteNote = "JobScheduleTypeName=" + this.jobScheduleTypeName.ToString() + ".";
+
+            if (base.isNew)
             {
-                base.UndoChanges();
-                this.jobScheduleTypeName = this.jobScheduleTypeNameOld;
-                this.description = this.descriptionOld;
-                this.instanceDescription = this.instanceDescriptionOld;
-                this.note = this.noteOld;
+                throw new Exception("Cannot delete a new data item.");
+            }
+
+            // Delete the data item.
+            try
+            {
+
+                base.database.OpenConnection();
+
+                base.sqlCommand.Connection = base.database.SQLConnection;
+                base.sqlCommand.CommandType = CommandType.StoredProcedure;
+                base.sqlCommand.CommandText = "[Service].[DeleteJobScheduleType]";
+
+                #region Set stored procedure parameters
+                base.sqlCommand.Parameters.Clear();
+                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", base.itemUid);
+                base.sqlCommand.Parameters.AddWithValue("@Note", deleteNote);
+                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", base.updatingUser.UserId);
+			    #endregion
+
+                // Execute stored procedure.
+                returnCode = Convert.ToInt32(base.sqlCommand.ExecuteScalar()); // Returns an error code. 0=no error.
+
+                if (returnCode == 0)
+                {
+                    base.ItemSuccessfullyDeleted();
+                }
+                else
+                {
+                    throw new Exception("WARNING! The attempt to delete, the data item returned a non-zero return code.  The return code is: " + returnCode.ToString() + ".");
+                }
+
+            }
+            catch (SqlException sqlEx)
+            {
+
+                // Check if there was a reference constraint error.
+                if (sqlEx.Number == 547)
+                {
+                    returnCode = 1;
+                }
+                else
+                {
+                    throw new Exception("A SQL exception occurred in Triadcore.Service.JobScheduleType.DeleteItem().  The error code is: " + sqlEx.Number.ToString() + ". The execption is: " + sqlEx.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("An exception occurred in Triadcore.Service.JobScheduleType.DeleteItem(). The exception is: " + ex.Message);
+
+            }
+            finally
+            {
+
+                base.database.CloseConnectionConditionally();
+
+            }
+
+            // The data item could not be deleted because other data contains a reference to it.
+            // Set the data item as INACTIVE.
+            if (returnCode == 1)
+            {
+                try
+                {
+                    this.SetActiveIndicator(false);
+                    base.clientMessages.Add("The data item could not be deleted in the database because other data contains a reference to it. The data was instead set to an INACTIVE status in the database.");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("The data item could not be deleted in the database because other data contains a reference to it. An attempt was made to set the data to an INACTIVE status in the database but an error occured:" + ex.Message);
+                }
             }
 
             return;
@@ -938,45 +927,36 @@ namespace Triadcore.Service
         }
 
         /// <summary>
-        /// Writes data to backup local data items for later retrieval of the original data values.
+        /// Ensures that the item data is valid.
+        /// Failed validation error messages are written to the ClientMessages{} property.
         /// </summary>
-        public override void BackupValues()
+        /// <returns>True if the data is valid, False otherwise.</returns>
+        public override bool ValidateItem()
         {
 
-            base.BackupValues();
+            bool isValid = true;
 
-            this.jobScheduleTypeNameOld = this.jobScheduleTypeName;
-            this.descriptionOld = this.description;
-            this.instanceDescriptionOld = this.instanceDescription;
-            this.noteOld = this.note;
-
-            return;
-
-        }
-
-        /// <summary>
-        /// De-initializes the local values to their empty values.
-        /// </summary>
-        public override void DeinitializeValues()
-        {
-
-            base.DeinitializeValues();
-
-            this.jobScheduleTypeName = "";
-            this.description = "";
-            this.instanceDescription = "";
-            this.note = "";
-
-            this.BackupValues();
-
-            return;
+            // JobScheduleTypeName - empty string not allowed
+			if (this.jobScheduleTypeName == null || this.jobScheduleTypeName.Trim() == "")
+			{
+				isValid = false;
+				base.errorMessages.Add("Field [JobScheduleTypeName] cannot be null or blank.");
+			}
+			
+			if (isValid && this.IsDuplicate())
+			{
+				isValid = false;
+				base.errorMessages.Add("The item with unique field [JobScheduleTypeName] already exists in the datastore.");
+			}
+        
+            return isValid;
 
         }
 
         /// <summary>
         /// Searches for an existing item that already has the same unique name.
         /// </summary>
-        /// <returns>True if the name already exists, False otherwise.</returns>
+        /// <returns>True if the item already exists, False otherwise.</returns>
         public override bool IsDuplicate()
         {
 
@@ -996,19 +976,18 @@ namespace Triadcore.Service
                 base.sqlCommand.CommandText = "[Service].[GetJobScheduleTypes]";
 
                 // Set stored procedure parameters.
-                base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);
+                base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);  // forced DB Null
                 base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@DescriptionCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Description", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@NoteCompareLogic", System.DBNull.Value);
-                base.sqlCommand.Parameters.AddWithValue("@Note", System.DBNull.Value);
+			    base.sqlCommand.Parameters.AddWithValue("@CreateDate", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@UpdateDate", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value); 
+				// Unique field
+				base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeNameCompareLogic", Triadcore.ClassLibrary.DataConnUtilities.SqlCompareLogic.EqualTo.ToString());
+				base.sqlCommand.Parameters.AddWithValue("@JobScheduleTypeName", this.jobScheduleTypeName);
+				base.sqlCommand.Parameters.AddWithValue("@InstanceDescriptionCompareLogic", System.DBNull.Value);
+				base.sqlCommand.Parameters.AddWithValue("@InstanceDescription", System.DBNull.Value);
 
                 // Execute the stored procedure
                 sqlDr = base.sqlCommand.ExecuteReader();
@@ -1052,6 +1031,61 @@ namespace Triadcore.Service
             }
 
             return dupeFound;
+
+        }
+
+        /// <summary>
+        /// Writes data to backup local data items for later retrieval of the original data values.
+        /// </summary>
+        public override void BackupValues()
+        {
+
+            base.BackupValues();
+
+            this.jobScheduleTypeNameOld = this.jobScheduleTypeName;
+			this.descriptionOld = this.description;
+			this.instanceDescriptionOld = this.instanceDescription;
+			this.noteOld = this.note;
+
+            return;
+
+        }
+
+        /// <summary>
+        /// Restores the data that has not been saved to the datastore to their original values.
+        /// </summary>
+        public override void UndoChanges()
+        {
+
+            if (base.isDirty)
+            {
+                base.UndoChanges();
+                this.jobScheduleTypeName = this.jobScheduleTypeNameOld;
+				this.description = this.descriptionOld;
+				this.instanceDescription = this.instanceDescriptionOld;
+				this.note = this.noteOld;
+            }
+
+            return;
+
+        }
+
+        /// <summary>
+        /// De-initializes the local values to their empty values.
+        /// </summary>
+        public override void DeinitializeValues()
+        {
+
+            base.DeinitializeValues();
+
+            this.jobScheduleTypeName = "";
+			this.description = "";
+			this.instanceDescription = "";
+			this.note = "";
+
+            this.BackupValues();
+
+            return;
 
         }
         #endregion

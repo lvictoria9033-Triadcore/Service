@@ -1,11 +1,11 @@
-IF (Base.ProcedureExists('Service','SetJobActivation')=1)
+IF (Base.ProcedureExists('Service','SetJobActivation') = 1)
 	DROP PROCEDURE [Service].[SetJobActivation]
 
 GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Sets the Active column for a record.
-Create Date: 2026.07.28
+Create Date: 2026.10.22
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[SetJobActivation]
@@ -34,13 +34,13 @@ END
 
 IF ( @UpdateUserId IS NULL ) BEGIN
 	SET @UpdateUserId = -101
-	SELECT @UpdateUserId=ISNULL(UserId,-102) FROM [Base].[Users] WITH (NOLOCK) WHERE [DefaultFlag]=1
+	SELECT @UpdateUserId = ISNULL(UserId,-102) FROM [Base].[Users] WITH (NOLOCK) WHERE [DefaultFlag] = 1
 END
 
 
 
 -- Get current value - for UpdateMarkup
-SELECT @CurrentFlag=Active FROM  [Service].[Jobs] WITH (NOLOCK) WHERE [JobId]=@JobId
+SELECT @CurrentFlag = Active FROM  [Service].[Jobs] WITH (NOLOCK) WHERE [JobId] = @JobId
 
 -- Set the Active flag
 UPDATE [Service].[Jobs]

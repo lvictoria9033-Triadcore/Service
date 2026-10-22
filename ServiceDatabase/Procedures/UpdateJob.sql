@@ -1,11 +1,11 @@
-IF (Base.ProcedureExists('Service','UpdateJob')=1) BEGIN
+IF (Base.ProcedureExists('Service','UpdateJob') = 1) BEGIN
 	DROP PROCEDURE [Service].[UpdateJob]
 END
 GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Inserts a new Job if it does not exist, otherwise the Job is updated.
-Create Date: 2026.07.28
+Create Date: 2026.10.22
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[UpdateJob]
@@ -30,8 +30,9 @@ SET NOCOUNT ON
 DECLARE @LastUpdatedId INT
 DECLARE @ErrorCode INT = -1
 
-
 
+
+-- Validatations -----------------------------------------------------------------------------------------------
 
 IF (@SortText IS NULL) BEGIN
 	SET @SortText=''
@@ -87,16 +88,22 @@ IF (@LogFinishes IS NULL) BEGIN
 	SET @LogFinishes=0
 END
 
+
+-- Preps -------------------------------------------------------------------------------------------------------
+
+
 IF ( @UpdateUserId IS NULL ) BEGIN
 	SET @UpdateUserId = -101
-	SELECT @UpdateUserId=ISNULL([UserId],-102) FROM [Base].[Users] WHERE [DefaultFlag]=1
+	SELECT @UpdateUserId = ISNULL([UserId],-102) FROM [Base].[Users] WHERE [DefaultFlag] = 1
 END
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 BEGIN TRANSACTION [TransUpdateData]
-
-	IF EXISTS(SELECT [JobId] FROM [Service].[Jobs] WHERE [JobId]=@JobId) BEGIN
-		-- Update the record		UPDATE [Service].[Jobs]
+
+	IF EXISTS(SELECT [JobId] FROM [Service].[Jobs] WHERE [JobId] = @JobId) BEGIN
+		-- Update the record
+		UPDATE [Service].[Jobs]
 			SET  [UpdateDate] = GETDATE()
 				,[UpdateUserId] = @UpdateUserId
 				,[SortText] = @SortText
@@ -110,7 +117,7 @@ BEGIN TRANSACTION [TransUpdateData]
 				,[LogFinishes] = @LogFinishes
 			WHERE JobId = @JobId
 		SET @ErrorCode = @@ERROR
-		IF (@ErrorCode<>0) BEGIN
+		IF (@ErrorCode <> 0) BEGIN
 			RAISERROR('Failed to UPDATE Job. Error code=%d.',18,2,@ErrorCode)
 			GOTO HANDLE_ERROR
 		END
@@ -145,7 +152,7 @@ BEGIN TRANSACTION [TransUpdateData]
 					,@LogStarts
 					,@LogFinishes)
 		SET @ErrorCode = @@ERROR
-		IF (@ErrorCode<>0) BEGIN
+		IF (@ErrorCode <> 0) BEGIN
 			RAISERROR('Failed to INSERT new Job. Error code=%d.',11,1,@ErrorCode)
 			GOTO HANDLE_ERROR
 		END
@@ -154,11 +161,13 @@ BEGIN TRANSACTION [TransUpdateData]
 
 COMMIT TRANSACTION [TransUpdateData]
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SELECT @LastUpdatedId
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 RETURN 0
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HANDLE_ERROR:
 ROLLBACK TRANSACTION [TransUpdateData]
 RETURN -1
