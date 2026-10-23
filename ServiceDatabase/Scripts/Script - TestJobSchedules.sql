@@ -8,6 +8,12 @@
 /*
 SELECT * FROM [Service].[JobSchedules] WITH (NOLOCK) ORDER BY [JobScheduleId] DESC
 */
+/*
+UPDATE [Service].[JobSchedules]
+SET [RunAsUser]='booboo'
+	,[RunAsPassword]='aloofa'
+WHERE [JobScheduleId]=9
+*/
 
 -- Get ----------------------------------------------------------------------------------------------------------------
 EXEC [Service].[GetJobSchedules] 
