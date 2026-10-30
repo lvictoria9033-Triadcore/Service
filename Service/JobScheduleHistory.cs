@@ -1,7 +1,7 @@
 /******************************************************************************************************************************************************
 * Name        : JobScheduleHistory.cs
 * Purpose     : Provides JobScheduleHistory support.
-* Create Date : 2026.10.23
+* Create Date : 2026.10.30
 * Created By  : Triadcore (ACB)
 ******************************************************************************************************************************************************/
 using System;
@@ -203,7 +203,7 @@ namespace Triadcore.Service
 		private string resultTextCompareLogic = null; 
 		private string resultText = null;
         //
-        protected string acbBuildDate = "2026.10.23";
+        protected string acbBuildDate = "2026.10.30";
         #endregion
 
 
@@ -541,7 +541,7 @@ namespace Triadcore.Service
         {
             get
             {
-                return "2026.10.23";
+                return "2026.10.30";
             }
         }
 
@@ -780,7 +780,7 @@ namespace Triadcore.Service
 		private string resultTextOld = null;
 		private string noteOld = null;
         //
-        protected string acbBuildDate = "2026.10.23";
+        protected string acbBuildDate = "2026.10.30";
         #endregion
 
 
@@ -823,9 +823,11 @@ namespace Triadcore.Service
                 base.sqlCommand.Parameters.AddWithValue("@GroupingLogic", System.DBNull.Value);  // forced DB Null
                 base.sqlCommand.Parameters.AddWithValue("@JobScheduleHistoryId", base.itemUid);
                 base.sqlCommand.Parameters.AddWithValue("@CreateDate", System.DBNull.Value); // forced DB Null
-				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value); // FKey
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserId", System.DBNull.Value);  // Fkey
+				base.sqlCommand.Parameters.AddWithValue("@CreateUserName", System.DBNull.Value); // Fkey alias to CreateUserId
 				base.sqlCommand.Parameters.AddWithValue("@UpdateDate", System.DBNull.Value); // forced DB Null
-				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value); // FKey
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserId", System.DBNull.Value);  // Fkey
+				base.sqlCommand.Parameters.AddWithValue("@UpdateUserName", System.DBNull.Value); // Fkey alias to UpdateUserId
 				base.sqlCommand.Parameters.AddWithValue("@Active", System.DBNull.Value); // forced DB Null
 				base.sqlCommand.Parameters.AddWithValue("@JobScheduleId", System.DBNull.Value); // FKey
 				base.sqlCommand.Parameters.AddWithValue("@ExecuteDateTimeStartCompareLogic", System.DBNull.Value);  // forced DB Null

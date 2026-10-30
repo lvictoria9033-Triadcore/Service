@@ -5,7 +5,7 @@ GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Deletes the JobScheduleHistory from the [JobScheduleHistories] table.
-Create Date: 2026.10.23
+Create Date: 2026.10.30
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[DeleteJobScheduleHistory]

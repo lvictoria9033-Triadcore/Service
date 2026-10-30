@@ -7,7 +7,7 @@ GO
 Returns results based on the criteria specified in the parameters.
 The calling program is required to embed the proper single quotes into the parameters.
 Note: Specifying @GroupingLogic='OR' requires that at least one of the input arguments is not 'null'.
-Create Date: 2026.10.23
+Create Date: 2026.10.30
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[GetJobScheduleHistories]

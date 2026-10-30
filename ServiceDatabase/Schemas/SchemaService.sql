@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------------------------------------------------
 Must use SP 'sp_executesql' because 'CREATE SCHEMA' must be the first statement in a query batch. (bummer!)
-Create Date: 2026.10.23
+Create Date: 2026.10.30
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 IF NOT EXISTS(SELECT schema_id FROM sys.schemas WHERE name='Service') BEGIN

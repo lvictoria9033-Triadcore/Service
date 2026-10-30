@@ -5,7 +5,7 @@ GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Sets the Active column for a record.
-Create Date: 2026.10.23
+Create Date: 2026.10.30
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[SetJobScheduleHistoryActivation]

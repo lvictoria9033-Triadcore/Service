@@ -5,7 +5,7 @@ GO
 
 /*---------------------------------------------------------------------------------------------------------------------
 Inserts a new JobScheduleHistory if it does not exist, otherwise the JobScheduleHistory is updated.
-Create Date: 2026.10.23
+Create Date: 2026.10.30
 Created By : Triadcore (ACB)
 ---------------------------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE [Service].[UpdateJobScheduleHistory]
